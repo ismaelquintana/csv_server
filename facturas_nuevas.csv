@@ -1,0 +1,13 @@
+concepto,fecha,id,importe,irpf,iva,pagada
+" ""Servicios informaticos""",2018-12-19,1,2050.65,7,21, true
+" ""Servicios Python""",2018-12-20,2,1050.65,7,21, true
+" ""Servicios Elixir""",2018-12-21,3,2550.65,7,21, true
+" ""Servicios Innovadoor""",2018-12-23,4,666.66,7,21, true
+" ""Servicios de algún tipo""",2018-12-25,5,255.67,7,21, true
+" ""Servicios Imprescindibles""",2018-12-21,6,550.43,7,21, true
+" ""Algo realmente importante""",2018-12-24,7,432.0,7,21, true
+" ""Servicios vocacionales""",2018-12-27,8,647.44,7,21, true
+" ""Papas arrugadas""",2019-01-01,9,325.23,7,21, false
+" ""Repollo para cocido""",2019-01-01,10,5.23,7,21, false
+" ""Pato laqueado""",2019-01-01,11,15.23,7,21, false
+" ""Ordenador portatil""",2019-01-01,12,1215.23,7,21, false

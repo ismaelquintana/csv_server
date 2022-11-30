@@ -24,13 +24,22 @@ defmodule CsvServer do
   """
   @impl true
   def handle_call(:all, _from, state) do
-    IO.inspect(state)
     {:reply, Map.get(state, :data, []), state}
   end
 
   @impl true
   def handle_call(:filename, _from, state) do
     {:reply, Map.get(state, :filename, "not define"), state}
+  end
+
+  @impl true
+  def handle_call(:keys, _from, state) do
+    keys =
+      state.data
+      |> List.first()
+      |> Map.keys()
+
+    {:reply, keys, state}
   end
 
   @impl true
@@ -50,6 +59,11 @@ defmodule CsvServer do
   end
 
   @impl true
+  def handle_cast({:insert, value}, state) do
+    {:noreply, %{state | data: [ value | state.data]}}
+  end
+
+  @impl true
   def handle_cast(:save, state) do
     DataFrame.new(state.data)
     |> DataFrame.to_csv(state.filename)
@@ -63,7 +77,8 @@ defmodule CsvServer do
   def start_link(opts) do
     filename = Keyword.fetch!(opts, :filename)
     header = Keyword.get(opts, :header, true)
-    GenServer.start_link(__MODULE__, %{filename: filename, header: header})
+    tabla = Keyword.fetch!(opts, :tabla)
+    GenServer.start_link(__MODULE__, %{filename: filename, header: header}, name: tabla)
   end
 
   def all(pid) do
@@ -74,8 +89,16 @@ defmodule CsvServer do
     GenServer.call(pid, :filename)
   end
 
+  def keys(pid) do
+    GenServer.call(pid, :keys)
+  end
+
   def save(pid) do
     GenServer.cast(pid, :save)
+  end
+
+  def insert(pid, value) do
+    GenServer.cast(pid, {:insert, value})
   end
 
   def new_filename(pid, filename) do
